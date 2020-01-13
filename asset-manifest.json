@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/FacebookAdsInterest/static/css/main.1ef281c7.chunk.css",
+    "main.js": "/FacebookAdsInterest/static/js/main.a274e6f3.chunk.js",
+    "main.js.map": "/FacebookAdsInterest/static/js/main.a274e6f3.chunk.js.map",
+    "runtime-main.js": "/FacebookAdsInterest/static/js/runtime-main.8e67d240.js",
+    "runtime-main.js.map": "/FacebookAdsInterest/static/js/runtime-main.8e67d240.js.map",
+    "static/js/2.a93f1719.chunk.js": "/FacebookAdsInterest/static/js/2.a93f1719.chunk.js",
+    "static/js/2.a93f1719.chunk.js.map": "/FacebookAdsInterest/static/js/2.a93f1719.chunk.js.map",
+    "index.html": "/FacebookAdsInterest/index.html",
+    "precache-manifest.bb97af1c6a95c24b6bfd23c3c8fb2fb4.js": "/FacebookAdsInterest/precache-manifest.bb97af1c6a95c24b6bfd23c3c8fb2fb4.js",
+    "service-worker.js": "/FacebookAdsInterest/service-worker.js",
+    "static/css/main.1ef281c7.chunk.css.map": "/FacebookAdsInterest/static/css/main.1ef281c7.chunk.css.map",
+    "static/js/2.a93f1719.chunk.js.LICENSE": "/FacebookAdsInterest/static/js/2.a93f1719.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e67d240.js",
+    "static/js/2.a93f1719.chunk.js",
+    "static/css/main.1ef281c7.chunk.css",
+    "static/js/main.a274e6f3.chunk.js"
+  ]
+}
