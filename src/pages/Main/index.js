@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
+import { FaPlus, FaSpinner } from 'react-icons/fa';
 // import { Link } from 'react-router-dom';
 import { SearchBox } from '../../components/search-box/search-box.component';
 import { CardList } from '../../components/card-list/card-list.component';
