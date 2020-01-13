@@ -1,4 +1,5 @@
 {
+  "homepage":"http://diegovalemoreno.github.io/FacebookAdsInterest",
   "name": "modulo05",
   "version": "0.1.0",
   "private": true,
@@ -20,10 +21,12 @@
     "reactotron-redux-saga": "^4.2.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject"  
   },
   "browserslist": {
     "production": [
@@ -47,6 +50,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1"
   }
 }
