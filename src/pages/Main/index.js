@@ -8,7 +8,7 @@ import api from '../../services/api';
 import { formatNumber } from '../../util/format';
 import Container from '../../components/Container';
 import { Form, SubmitButton, List } from './styles';
-
+import { Datatable } from '../../components/Datatable' ;
 export default class Main extends Component {
   state = {
     newInterest: '',
@@ -19,6 +19,7 @@ export default class Main extends Component {
     selectedOption: 0,
   };
 
+ 
   // Carregar os dados no localstorage
   async componentDidMount() {
     const adInterests = localStorage.getItem('adInterests');
@@ -79,9 +80,9 @@ export default class Main extends Component {
       }
       console.tron.log(this.state.selectedOption);
       const response = await api.get(
-        `search?type=adinterest&q=[${newInterest}]&limit=1000000&locale=${languageOption}&access_token=2541353585958659|n6mgZMkqzaserb55jvmS9NhHwoc`
+        `search?type=adinterest&q=[%22${newInterest}%22]&limit=1000000&locale=${languageOption}&access_token=2541353585958659|n6mgZMkqzaserb55jvmS9NhHwoc`
       );
-
+      console.tron.log(response);
       // const data = {
       //   name: response.data.full_name,
       // };
@@ -121,7 +122,8 @@ export default class Main extends Component {
   };
 
   render() {
-    const {
+
+     const {
       newInterest,
       adInterests,
       searchField,
@@ -136,6 +138,7 @@ export default class Main extends Component {
       <div className="App">
         <h1>Busca de interesses - API Facebook</h1>
 
+        <Datatable interests={filteredInterests} />
         <form>
           <div className="radio">
             <label>

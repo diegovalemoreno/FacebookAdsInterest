@@ -4,15 +4,10 @@ import { Link } from 'react-router-dom';
 
 export const Card = props => (
   <div className="card-container">
-    {/* {props.interests.path.foreach(path => (
-      <p> Audiencia</p>
-    ))} */}
-    <h2>{props.interest.name}</h2>
+    <ul>{props.interest.name}</ul>;
+    {/* <h2>{props.interest.name}</h2>
     <p> Audiencia: {props.interest.audienceFormated} </p>
     <p> Tópico: {props.interest.topic} </p>
-    <p> {props.interest.path} </p>
-    {/* <Link to={`/repository/${encodeURIComponent(props.interest.name)}`}>
-      Detalhes
-    </Link> */}
+    <p> {props.interest.path} </p> */}
   </div>
 );
