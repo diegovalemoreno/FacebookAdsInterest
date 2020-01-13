@@ -1,6 +1,6 @@
 import React from 'react';
 import './card.styles.css';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 export const Card = props => (
   <div className="card-container">

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+// import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
+// import { Link } from 'react-router-dom';
 import { SearchBox } from '../../components/search-box/search-box.component';
 import { CardList } from '../../components/card-list/card-list.component';
 import '../../config/reactotronConfig';
 import api from '../../services/api';
 import { formatNumber } from '../../util/format';
-import Container from '../../components/Container';
-import { Form, SubmitButton, List } from './styles';
+// import Container from '../../components/Container';
+import { Form, SubmitButton } from './styles';
 
 export default class Main extends Component {
   state = {
