@@ -1,7 +1,7 @@
 import React from 'react';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import {
 //   MdRemoveCircleOutline,
 //   MdAddCircleOutline,
@@ -45,9 +45,9 @@ export const Datatable = props => (
         <thead>
           <tr>
             <th />
-            <th>PRODUCT</th>
-            <th>AMOUNT</th>
-            <th>SUBTOTAL</th>
+            <th>Interest</th>
+            <th>Audience</th>
+            <th>Path</th>
             <th />
           </tr>
         </thead>
@@ -55,8 +55,18 @@ export const Datatable = props => (
           {props.interests.map(interest => (
             <tr>
               <td>
+                <strong></strong>
+                {/* <span>{product.priceFormatted}</span> */}
+              </td>
+              <td>
                 <strong>{interest.name}</strong>
                 {/* <span>{product.priceFormatted}</span> */}
+              </td>
+              <td>
+                <strong>{interest.audience_size}</strong>
+              </td>
+              <td>
+                <strong>{interest.path}</strong>
               </td>
             </tr>
           ))}

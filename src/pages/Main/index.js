@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
+import { Table } from 'semantic-ui-react'
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { SearchBox } from '../../components/search-box/search-box.component';
@@ -17,6 +19,8 @@ export default class Main extends Component {
     error: false,
     searchField: '',
     selectedOption: 0,
+    direction: null,
+    column: null,
   };
 
  
@@ -121,14 +125,34 @@ export default class Main extends Component {
     console.tron.log(this.state.selectedOption);
   };
 
-  render() {
+  handleSort = (clickedColumn) => () => {
+    const { column, adInterests, direction } = this.state
 
+    if (column !== clickedColumn) {
+      this.setState({
+        column: clickedColumn,
+        adInterests: _.sortBy(adInterests, [clickedColumn]),
+        direction: 'ascending',
+      })
+
+      return
+    }
+
+    this.setState({
+      adInterests: adInterests.reverse(),
+      direction: direction === 'ascending' ? 'descending' : 'ascending',
+    })
+  }
+
+  render() {
+   
      const {
       newInterest,
       adInterests,
       searchField,
       loading,
       error,
+      column, direction 
     } = this.state;
     const filteredInterests = adInterests.filter(adInterest =>
       adInterest.name.toLowerCase().includes(searchField.toLowerCase())
@@ -137,8 +161,6 @@ export default class Main extends Component {
     return (
       <div className="App">
         <h1>Busca de interesses - API Facebook</h1>
-
-        <Datatable interests={filteredInterests} />
         <form>
           <div className="radio">
             <label>
@@ -199,7 +221,42 @@ export default class Main extends Component {
           <FaPlus color="#FFF" size={1} />
         )}
         <button onClick={this.handleClear}> Limpar pesquisa</button>
-        <CardList interests={filteredInterests} />
+        {/* <Datatable interests={filteredInterests} />
+        <CardList interests={filteredInterests} /> */}
+
+      <Table sortable celled fixed>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell
+              sorted={column === 'name' ? direction : null}
+              onClick={this.handleSort('name')}
+            >
+              Name
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === 'audience_size' ? direction : null}
+              onClick={this.handleSort('audience_size')}
+            >
+              audience_size
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === 'path' ? direction : null}
+              onClick={this.handleSort('path')}
+            >
+              path
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {_.map(filteredInterests, ({ name, audience_size, path }) => (
+            <Table.Row key={name}>
+              <Table.Cell>{name}</Table.Cell>
+              <Table.Cell>{audience_size}</Table.Cell>
+              <Table.Cell>{path}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
       </div>
     );
   }
