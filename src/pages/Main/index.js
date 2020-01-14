@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import ReactFlagsSelect from 'react-flags-select';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-flags-select/css/react-flags-select.css';
 import { FaPlus, FaSpinner } from 'react-icons/fa';
 // import { Link } from 'react-router-dom';
 import { SearchBox } from '../../components/search-box/search-box.component';
@@ -6,7 +11,7 @@ import { CardList } from '../../components/card-list/card-list.component';
 import '../../config/reactotronConfig';
 import api from '../../services/api';
 import { formatNumber } from '../../util/format';
-// import Container from '../../components/Container';
+import Container from '../../components/Container';
 import { Form, SubmitButton } from './styles';
 
 export default class Main extends Component {
@@ -56,22 +61,23 @@ export default class Main extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     this.setState({ loading: true });
-    console.tron.log('You have selected:', this.state.selectedOption);
+    // console.tron.log('You have selected:', this.state.selectedOption);
     try {
       const { newInterest, adInterests } = this.state;
 
       if (adInterests.find(r => r.name === newInterest)) {
+        this.handleClear();
         throw new Error('Interesse duplicado!');
       }
       let languageOption = '';
       switch (this.state.selectedOption) {
-        case 'option1':
+        case 'US':
           languageOption = 'en_US';
           break;
-        case 'option2':
+        case 'BR':
           languageOption = 'pt_BR';
           break;
-        case 'option3':
+        case 'ES':
           languageOption = 'es_ES';
           break;
         default:
@@ -113,6 +119,12 @@ export default class Main extends Component {
     });
   };
 
+  onSelectFlag = countryCode => {
+    this.setState({ selectedOption: countryCode });
+    // console.tron.log(countryCode);
+    console.tron.log(this.state.selectedOption);
+  };
+
   handleOptionChange = e => {
     this.setState({
       selectedOption: e.target.value,
@@ -134,43 +146,8 @@ export default class Main extends Component {
 
     return (
       <div className="App">
-        <h1>Busca de interesses - API Facebook</h1>
+        {/* <h1>Busca de interesses - API Facebook</h1> */}
 
-        <form>
-          <div className="radio">
-            <label>
-              <input
-                type="radio"
-                value="option1"
-                checked={this.state.selectedOption === 'option1'}
-                onChange={this.handleOptionChange}
-              />
-              Ingles
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input
-                type="radio"
-                value="option2"
-                checked={this.state.selectedOption === 'option2'}
-                onChange={this.handleOptionChange}
-              />
-              Portugues
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input
-                type="radio"
-                value="option3"
-                checked={this.state.selectedOption === 'option3'}
-                onChange={this.handleOptionChange}
-              />
-              Espanhol
-            </label>
-          </div>
-        </form>
         <Form onSubmit={this.handleSubmit} error={error}>
           <input
             type="text"
@@ -179,13 +156,72 @@ export default class Main extends Component {
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton loading={loading}>
+          <Container>
+            <ReactFlagsSelect
+              defaultCountry="US"
+              onSelect={this.onSelectFlag}
+              countries={['US', 'BR', 'ES']}
+              customLabels={{
+                US: 'EN-US',
+                BR: 'PT-BR',
+                ES: 'ES-ES',
+              }}
+              placeholder="Select Language"
+              selectedSize={24}
+            />
+          </Container>
+
+          <ButtonToolbar>
+            <Button
+              variant="primary"
+              disabled={loading}
+              onClick={!loading ? this.handleSubmit : null}
+            >
+              {loading ? 'Carregando…' : 'Explorar'}
+            </Button>
+          </ButtonToolbar>
+          {/* <form>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="option1"
+                  checked={this.state.selectedOption === 'option1'}
+                  onChange={this.handleOptionChange}
+                />
+                Ingles
+              </label>
+            </div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="option2"
+                  checked={this.state.selectedOption === 'option2'}
+                  onChange={this.handleOptionChange}
+                />
+                Portugues
+              </label>
+            </div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="option3"
+                  checked={this.state.selectedOption === 'option3'}
+                  onChange={this.handleOptionChange}
+                />
+                Espanhol
+              </label>
+            </div>
+          </form> */}
+          {/* <SubmitButton loading={loading}>
             {loading ? (
-              <FaSpinner color="#FFF" size={14} />
+              <FaSpinner color="#FFF" size={30} />
             ) : (
-              <FaPlus color="#FFF" size={14} />
+              <FaPlus color="#FFF" size={30} />
             )}
-          </SubmitButton>
+          </SubmitButton> */}
         </Form>
         {adInterests.length ? (
           <SearchBox
@@ -195,6 +231,7 @@ export default class Main extends Component {
         ) : (
           <FaPlus color="#FFF" size={1} />
         )}
+
         <button onClick={this.handleClear}> Limpar pesquisa</button>
         <CardList interests={filteredInterests} />
       </div>

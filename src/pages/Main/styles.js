@@ -6,11 +6,16 @@ export const Form = styled.form`
   flex-direction: row;
 
   input {
+    /* position: relative; */
     flex: 1;
+    /* width: 50%; */
+    /* height: 10px; */
     border: 1px solid ${props => (props.error ? '#ff6b6b' : '#eee')};
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 25px;
+    margin: auto;
+    margin-left: ${props => (props.barOpened ? '10rem' : '1rem')};
   }
 `;
 
