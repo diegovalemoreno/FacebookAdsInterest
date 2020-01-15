@@ -4,6 +4,8 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-flags-select/css/react-flags-select.css';
+import ReactTable from "react-table-6";
+import "react-table-6/react-table.css";
 import { FaPlus, FaSpinner } from 'react-icons/fa';
 // import { Link } from 'react-router-dom';
 import { SearchBox } from '../../components/search-box/search-box.component';
@@ -13,6 +15,9 @@ import api from '../../services/api';
 import { formatNumber } from '../../util/format';
 import Container from '../../components/Container';
 import { Form, SubmitButton } from './styles';
+import matchSorter from "match-sorter";
+// Import React Table
+
 
 export default class Main extends Component {
   state = {
@@ -180,41 +185,7 @@ export default class Main extends Component {
               {loading ? 'Carregando…' : 'Explorar'}
             </Button>
           </ButtonToolbar>
-          {/* <form>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="option1"
-                  checked={this.state.selectedOption === 'option1'}
-                  onChange={this.handleOptionChange}
-                />
-                Ingles
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="option2"
-                  checked={this.state.selectedOption === 'option2'}
-                  onChange={this.handleOptionChange}
-                />
-                Portugues
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="option3"
-                  checked={this.state.selectedOption === 'option3'}
-                  onChange={this.handleOptionChange}
-                />
-                Espanhol
-              </label>
-            </div>
-          </form> */}
+          
           {/* <SubmitButton loading={loading}>
             {loading ? (
               <FaSpinner color="#FFF" size={30} />
@@ -233,8 +204,75 @@ export default class Main extends Component {
         )}
 
         <button onClick={this.handleClear}> Limpar pesquisa</button>
-        <CardList interests={filteredInterests} />
-      </div>
+        {/* <CardList interests={filteredInterests} /> */}
+        <ReactTable
+          data={filteredInterests}
+          filterable
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]) === filter.value
+          }
+          columns={[
+            {
+              Header: "Name",
+              columns: [
+                {
+                  Header: "Interesses",
+                  accessor: "name",
+                  filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value) &&
+                    row[filter.id].endsWith(filter.value)
+                },
+                {
+                  Header: "Relevancia",
+                  id: "audience_size",
+                  accessor: d => d.audience_size,
+                  filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["lastName"] }),
+                  filterAll: true
+                }
+              ]
+            },
+            {
+              // Header: "Info",
+              columns: [
+                {
+                  Header: "Topic",
+                  accessor: "topic"
+                },
+                {
+                  Header: "Over 21",
+                  accessor: "age",
+                  id: "over",
+                  Cell: ({ value }) => (value >= 21 ? "Yes" : "No"),
+                  filterMethod: (filter, row) => {
+                    if (filter.value === "all") {
+                      return true;
+                    }
+                    if (filter.value === "true") {
+                      return row[filter.id] >= 21;
+                    }
+                    return row[filter.id] < 21;
+                  },
+                  Filter: ({ filter, onChange }) => (
+                    <select
+                      onChange={event => onChange(event.target.value)}
+                      style={{ width: "100%" }}
+                      value={filter ? filter.value : "all"}
+                    >
+                      <option value="all">Show All</option>
+                      <option value="true">Can Drink</option>
+                      <option value="false">Can't Drink</option>
+                    </select>
+                  )
+                }
+              ]
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
+  
+    </div>
     );
   }
 }
